@@ -3,7 +3,7 @@ name: Deploy Terraform
 on:
   push:
     branches:
-      - main
+      - main       # só roda quando fizer push na main
 
 jobs:
   terraform:
@@ -12,28 +12,34 @@ jobs:
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
+        # baixa seu código pra runner, incluindo main.tf e pasta lambda
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.5
+        # instala o terraform na versão especificada
 
       - name: Configurar credenciais AWS
-        run: |
-          echo "Exportando credenciais AWS..."
-          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "AWS_REGION=us-east-1" >> $GITHUB_ENV
-
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+        # configura as credenciais AWS para o terraform acessar sua conta
 
       - name: Terraform Init
         run: terraform init
+        # inicializa o terraform (baixa providers, etc)
 
       - name: Terraform Validate
         run: terraform validate
+        # valida sintaxe e configurações do terraform
 
       - name: Terraform Plan
         run: terraform plan
+        # gera o plano do que vai mudar na AWS (exibe no log)
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        # aplica as mudanças na AWS automaticamente

@@ -16,13 +16,13 @@ jobs:
         with:
           terraform_version: 1.4.6
 
-       - name: Configurar credenciais AWS
+      - name: Definir credenciais da AWS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
         run: |
-          echo "Exportando credenciais AWS..."
-          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "AWS_REGION=us-east-1" >> $GITHUB_ENV
-          echo "Credenciais carregadas com sucesso :)"
+          echo "Credenciais carregadas com sucesso"
 
       - name: Terraform Init
         run: terraform init

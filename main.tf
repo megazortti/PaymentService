@@ -14,7 +14,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "terraform-state"  # igual ao que você criou no bootstrap
+    bucket         = "terraform-state-main2"  # igual ao que você criou no bootstrap
     key            = "lambda/terraform.tfstate"            # caminho dentro do bucket, pode personalizar
     region         = "us-east-1"
     dynamodb_table = "terraform-lock"

@@ -13,12 +13,12 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "tf_state" {
-  bucket = "terraform-state-victor-unique-12345" # MUDE para um nome único global aqui
+  bucket = "terraform-state-main2" # MUDE para um nome único global aqui
   acl    = "private"
 }
 
 resource "aws_dynamodb_table" "tf_lock" {
-  name         = "terraform-lock-victor-unique-12345" # MUDE para um nome único global
+  name         = "terraform-lock-main2" # MUDE para um nome único global
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 

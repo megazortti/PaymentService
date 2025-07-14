@@ -25,7 +25,7 @@ jobs:
           echo "Credenciais carregadas com sucesso"
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -reconfigure
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve

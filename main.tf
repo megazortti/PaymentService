@@ -17,7 +17,7 @@ terraform {
     bucket         = "terraform-state-main2"  # igual ao que você criou no bootstrap
     key            = "lambda/terraform.tfstate"            # caminho dentro do bucket, pode personalizar
     region         = "us-east-1"
-    dynamodb_table = "terraform-lock"
+    dynamodb_table = "terraform-lock-main2"
     encrypt        = true
   }
 }

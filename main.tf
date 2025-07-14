@@ -12,6 +12,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
+terraform {
+  backend "s3" {
+    bucket         = "terraform-state"  # igual ao que você criou no bootstrap
+    key            = "lambda/terraform.tfstate"            # caminho dentro do bucket, pode personalizar
+    region         = "us-east-1"
+    dynamodb_table = "terraform-lock"
+    encrypt        = true
+  }
+}
+
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_role_minimal"
 

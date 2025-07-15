@@ -13,10 +13,10 @@ resource "aws_acm_certificate" "cert" {
 
 resource "cloudflare_record" "cert_validation" {
   zone_id = var.cloudflare_zone_id
-  name    = aws_acm_certificate.cert.domain_validation_options[0].resource_record_name
-  type    = aws_acm_certificate.cert.domain_validation_options[0].resource_record_type
-  value   = aws_acm_certificate.cert.domain_validation_options[0].resource_record_value
-  ttl     = 300
+  name  = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_name
+  type  = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
+  value = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value
+  ttl   = 300
 }
 
 resource "aws_acm_certificate_validation" "cert_validation" {

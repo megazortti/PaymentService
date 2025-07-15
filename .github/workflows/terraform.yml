@@ -29,7 +29,7 @@ jobs:
         # configura as credenciais AWS para o terraform acessar sua conta
 
       - name: Terraform Init
-        run: terraform init -reconfigure infra/
+        run: terraform init -reconfigure -chdir=infra
         # inicializa o terraform (baixa providers, etc)
 
       - name: Export variables
@@ -39,13 +39,13 @@ jobs:
           echo "TF_VAR_cloudflare_zone_id=${{ secrets.cloudflare_zone_id }}" >> $GITHUB_ENV
 
       - name: Terraform Validate
-        run: terraform validate infra/
+        run: terraform validate -chdir=infra
         # valida sintaxe e configurações do terraform
 
       - name: Terraform Plan
-        run: terraform plan infra/
+        run: terraform plan -chdir=infra
         # gera o plano do que vai mudar na AWS (exibe no log)
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve infra/
+        run: terraform apply -auto-approve -chdir=infra
         # aplica as mudanças na AWS automaticamente

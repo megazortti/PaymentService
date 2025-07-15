@@ -32,6 +32,12 @@ jobs:
         run: terraform init -reconfigure
         # inicializa o terraform (baixa providers, etc)
 
+      - name: Export variables
+        run: |
+          echo "TF_VAR_cloudflare_api_token=${{ secrets.cloudflare_api_token }}" >> $GITHUB_ENV
+          echo "TF_VAR_domain_name=mazzotti.app" >> $GITHUB_ENV
+          echo "TF_VAR_cloudflare_zone_id=${{ secrets.cloudflare_zone_id }}" >> $GITHUB_ENV
+
       - name: Terraform Validate
         run: terraform validate
         # valida sintaxe e configurações do terraform

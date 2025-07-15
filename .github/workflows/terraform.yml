@@ -39,13 +39,13 @@ jobs:
           echo "TF_VAR_cloudflare_zone_id=${{ secrets.cloudflare_zone_id }}" >> $GITHUB_ENV
 
       - name: Terraform Validate
-        run: terraform validate
+        run: terraform validate infra/
         # valida sintaxe e configurações do terraform
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan infra/
         # gera o plano do que vai mudar na AWS (exibe no log)
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve infra/
         # aplica as mudanças na AWS automaticamente

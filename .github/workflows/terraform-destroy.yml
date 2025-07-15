@@ -23,6 +23,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Exportar variáveis do Terraform
+        run: |
+          echo "TF_VAR_cloudflare_api_token=${{ secrets.cloudflare_api_token }}" >> $GITHUB_ENV
+          echo "TF_VAR_cloudflare_zone_id=${{ secrets.cloudflare_zone_id }}" >> $GITHUB_ENV
+          echo "TF_VAR_domain_name=mazzotti.app" >> $GITHUB_ENV
+
       - name: Terraform Init
         run: terraform -chdir=infra init -reconfigure
 

@@ -28,24 +28,25 @@ jobs:
           aws-region: us-east-1
         # configura as credenciais AWS para o terraform acessar sua conta
 
-      - name: Terraform Init
-        run: terraform init -reconfigure -chdir=infra
-        # inicializa o terraform (baixa providers, etc)
-
       - name: Export variables
         run: |
           echo "TF_VAR_cloudflare_api_token=${{ secrets.cloudflare_api_token }}" >> $GITHUB_ENV
           echo "TF_VAR_domain_name=mazzotti.app" >> $GITHUB_ENV
           echo "TF_VAR_cloudflare_zone_id=${{ secrets.cloudflare_zone_id }}" >> $GITHUB_ENV
+        # exporta as variáveis para o ambiente do Terraform
+
+      - name: Terraform Init
+        run: terraform -chdir=infra init -reconfigure
+        # inicializa o terraform (baixa providers, etc)
 
       - name: Terraform Validate
-        run: terraform validate -chdir=infra
+        run: terraform -chdir=infra validate
         # valida sintaxe e configurações do terraform
 
       - name: Terraform Plan
-        run: terraform plan -chdir=infra
+        run: terraform -chdir=infra plan
         # gera o plano do que vai mudar na AWS (exibe no log)
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -chdir=infra
+        run: terraform -chdir=infra apply -auto-approve
         # aplica as mudanças na AWS automaticamente

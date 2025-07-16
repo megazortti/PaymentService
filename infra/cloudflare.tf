@@ -8,6 +8,10 @@ resource "cloudflare_record" "apigw_alias" {
   type    = "CNAME"
   value   = aws_apigatewayv2_domain_name.custom_domain.domain_name_configuration[0].target_domain_name
   proxied = true
+  depends_on = [
+    aws_apigatewayv2_domain_name.custom_domain,
+    aws_apigatewayv2_api_mapping.mapping
+  ]
 }
 
 resource "cloudflare_record" "validation" {

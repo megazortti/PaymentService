@@ -13,8 +13,8 @@ terraform {
   required_version = ">= 1.3.0"
 
   backend "s3" {
-    bucket         = "terraform-state-main2"  # seu bucket S3 do state
-    key            = "lambda/terraform.tfstate"  # caminho do state
+    bucket         = "terraform-state-main2"
+    key            = "lambda/terraform.tfstate" 
     region         = "us-east-1"
     dynamodb_table = "terraform-lock-main2"
     encrypt        = true
@@ -23,6 +23,12 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
+  default_tags {
+    tags = {
+      "Project" = "PaymentService"
+      "Owner"   = "mazzotti.app"
+    }
+  }
 }
 
 provider "cloudflare" {

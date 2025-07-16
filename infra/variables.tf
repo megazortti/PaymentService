@@ -18,3 +18,14 @@ variable "cloudflare_zone_id" {
   description = "ID da zona DNS do domínio no Cloudflare"
   type        = string
 }
+
+variable "payment_webhook_domain_name" {
+  description = "Custom domain for MercadoPago payment webhook"
+  type        = string
+  default     = "payment.mazzotti.app"
+}
+
+variable "mercadopago_api_key" {
+  description = "API key for MercadoPago integration"
+  type        = string
+}

@@ -21,3 +21,15 @@ resource "cloudflare_record" "validation" {
   value = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value
   ttl     = 300
 }
+
+resource "cloudflare_record" "payment_apigw_alias" {
+  zone_id = data.cloudflare_zone.main.id 
+  name    = "payment" 
+  type    = "CNAME"
+  value   = aws_apigatewayv2_domain_name.payment_webhook_domain.domain_name_configuration[0].target_domain_name
+  proxied = true
+  depends_on = [
+    aws_apigatewayv2_domain_name.payment_webhook_domain,
+    aws_apigatewayv2_api_mapping.payment_webhook_mapping
+  ]
+}

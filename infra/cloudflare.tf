@@ -24,7 +24,7 @@ resource "cloudflare_record" "validation" {
 
 resource "cloudflare_record" "payment_apigw_alias" {
   zone_id = data.cloudflare_zone.main.id 
-  name    = "payment" 
+  name    = "payment.mazzotti.app" 
   type    = "CNAME"
   value   = aws_apigatewayv2_domain_name.payment_webhook_domain.domain_name_configuration[0].target_domain_name
   proxied = true

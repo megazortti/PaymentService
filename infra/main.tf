@@ -11,5 +11,5 @@ module "payment_webhook_lambda" {
   function_name   = "payment_webhook_lambda"
   handler         = "handler.webhook"
   runtime         = "nodejs18.x"
-  source_path     = "../lambda/payment_webhook"
+  source_path     = "./../lambda/payment_webhook"
 }

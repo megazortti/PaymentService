@@ -21,7 +21,8 @@ resource "aws_lambda_function" "lambda" {
 
   source_code_hash = filebase64sha256("${var.source_path}/function.zip")
 }
-resource "aws_lambda_permission" "apigw" {
+
+resource "aws_lambda_permission" "allow_apigw" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda.function_name

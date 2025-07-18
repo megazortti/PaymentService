@@ -35,7 +35,7 @@ module "cloudflare" {
   target_domain = module.apigw.api_gateway_domain
 }
 
-module "cloudflare" {
+module "cloudflare_payment_webhook" {
   source        = "./modules/cloudflare"
   domain_name   = "pay.mazzotti.app"
   zone_id       = var.cloudflare_zone_id

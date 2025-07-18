@@ -9,17 +9,15 @@ resource "aws_acm_certificate" "cert" {
 
 resource "cloudflare_record" "cert_validation" {
   zone_id = var.cloudflare_zone_id
-  name    = aws_acm_certificate.cert.domain_validation_options[0].resource_record_name
-  type    = aws_acm_certificate.cert.domain_validation_options[0].resource_record_type
-  value   = aws_acm_certificate.cert.domain_validation_options[0].resource_record_value
-  ttl     = 300
+
+  name  = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_name
+  type  = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
+  value = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value
+
+  ttl = 300
+  proxied = false
 }
 
 resource "aws_acm_certificate_validation" "cert_validation" {
   certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [cloudflare_record.cert_validation.name]
-}
-
-output "certificate_arn" {
-  value = aws_acm_certificate.cert.arn
-}
+  validation_record_fq

@@ -31,8 +31,9 @@ resource "aws_apigatewayv2_stage" "stage" {
 }
 
 resource "aws_apigatewayv2_domain_name" "custom_domain" {
-  count               = var.domain_name != null ? 1 : 0
-  domain_name         = var.domain_name
+  count       = var.domain_name != null ? 1 : 0
+  domain_name = var.domain_name
+
   domain_name_configuration {
     certificate_arn = var.certificate_arn
     endpoint_type   = "REGIONAL"

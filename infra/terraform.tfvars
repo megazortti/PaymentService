@@ -1,3 +1,4 @@
-aws_region          = "us-east-1"
-domain_name         = "mazzotti.app"
-mercadopago_api_key = "your_mercadopago_api_key"
+aws_region           = "us-east-1"
+# cloudflare_api_token = "COLOQUE_AQUI_O_TOKEN"
+# cloudflare_zone_id   = "COLOQUE_AQUI_O_ZONE_ID"
+domain_name          = "api.seudominio.com"

@@ -1,15 +1,4 @@
-variable "function_name" {
-  type = string
-}
-
-variable "source_path" {
-  type = string
-}
-
-variable "handler" {
-  type = string
-}
-
-variable "runtime" {
-  type = string
-}
+variable "lambda_name" {}
+variable "handler" {}
+variable "runtime" {}
+variable "source_path" {}

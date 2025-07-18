@@ -14,7 +14,7 @@ terraform {
 
   backend "s3" {
     bucket         = "terraform-state-main2"
-    key            = "lambda/terraform.tfstate" 
+    key            = "lambda/terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "terraform-lock-main2"
     encrypt        = true
@@ -25,8 +25,8 @@ provider "aws" {
   region = var.aws_region
   default_tags {
     tags = {
-      "Project" = "PaymentService"
-      "Owner"   = "mazzotti.app"
+      Project = "PaymentService"
+      Owner   = "mazzotti.app"
     }
   }
 }

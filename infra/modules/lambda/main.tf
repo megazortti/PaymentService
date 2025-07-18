@@ -1,36 +1,30 @@
-resource "aws_iam_role" "lambda_role" {
-  name = "lambda_role_${var.function_name}"
-
+resource "aws_iam_role" "lambda_exec" {
+  name = "${var.lambda_name}_exec_role"
   assume_role_policy = jsonencode({
-    Version = "2012-10-17",
+    Version = "2012-10-17"
     Statement = [{
-      Effect    = "Allow",
-      Principal = { Service = "lambda.amazonaws.com" },
-      Action    = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
     }]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_basic" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
-data "archive_file" "lambda_zip" {
-  type        = "zip"
-  source_dir  = var.source_path
-  output_path = "${path.module}/lambda_${var.function_name}.zip"
-}
-
 resource "aws_lambda_function" "lambda" {
-  function_name = var.function_name
-  role          = aws_iam_role.lambda_role.arn
+  function_name = var.lambda_name
   handler       = var.handler
   runtime       = var.runtime
+  role          = aws_iam_role.lambda_exec.arn
+  filename      = "${var.source_path}/function.zip"
 
-  filename         = data.archive_file.lambda_zip.output_path
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  source_code_hash = filebase64sha256("${var.source_path}/function.zip")
+}
 
-  memory_size = 128
-  timeout     = 3
+resource "aws_lambda_permission" "allow_apigw" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda.function_name
+  principal     = "apigateway.amazonaws.com"
 }

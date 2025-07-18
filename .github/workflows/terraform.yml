@@ -38,6 +38,11 @@ jobs:
       - name: Terraform Init
         run: terraform -chdir=infra init -reconfigure
         # inicializa o terraform (baixa providers, etc)
+      
+      - name: Zipar Lambda
+        run: |
+          cd lambda/hello-world
+          zip function.zip index.js
 
       - name: Terraform Validate
         run: terraform -chdir=infra validate

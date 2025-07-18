@@ -1,21 +1,26 @@
-variable "domain_name" {
-  description = "O domínio custom para a API"
-  type        = string
-}
-
 variable "aws_region" {
-  description = "AWS region to deploy resources"
+  description = "AWS region"
   type        = string
   default     = "us-east-1"
 }
 
+variable "cloudflare_api_token" {
+  description = "Cloudflare API token"
+  type        = string
+  sensitive   = true
+}
+
 variable "cloudflare_zone_id" {
-  description = "Zone ID do Cloudflare para o domínio"
+  description = "Cloudflare zone ID"
   type        = string
 }
 
-variable "cloudflare_api_token" {
-  description = "Token API Cloudflare com permissões DNS"
+variable "domain_name" {
+  description = "Domínio customizado para a API Gateway"
   type        = string
-  sensitive   = true
+}
+
+variable "lambda_source_path" {
+  description = "Caminho da pasta com código da Lambda"
+  type        = string
 }

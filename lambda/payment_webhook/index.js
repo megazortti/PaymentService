@@ -1,33 +1,62 @@
+const AWS = require("aws-sdk");
+const ses = new AWS.SES();
+
 exports.handler = async (event) => {
+  // Pega o método HTTP (compatível REST API e HTTP API)
   const method =
     event.httpMethod || (event.requestContext && event.requestContext.http && event.requestContext.http.method);
-  const body = event.body;
-  console.log(body, "body");
 
-  let parsedBody;
-  try {
-    parsedBody = JSON.parse(body);
-    console.log(parsedBody, "body parsed");
-  } catch {
-    parsedBody = body;
-  }
-
-  if (method === "POST") {
+  if (method !== "POST") {
     return {
-      statusCode: 200,
+      statusCode: 405,
       body: JSON.stringify({
-        message: "POST recebido com sucesso!",
-        data: parsedBody,
+        error: "Método não permitido",
         timestamp: new Date().toISOString(),
       }),
     };
   }
 
-  return {
-    statusCode: 405,
-    body: JSON.stringify({
-      error: "Método não permitido",
-      timestamp: new Date().toISOString(),
-    }),
+  // Pega o corpo da requisição
+  let parsedBody;
+  try {
+    parsedBody = JSON.parse(event.body);
+  } catch {
+    parsedBody = {};
+  }
+
+  // Parâmetros do SES, com e-mails do sandbox (verificados)
+  const params = {
+    Source: "pagamentos@mazzotti.app",
+    Destination: {
+      ToAddresses: ["mazzotti.vlm@gmail.com"],
+    },
+    Message: {
+      Subject: { Data: "Novo POST recebido - SES Sandbox" },
+      Body: {
+        Text: {
+          Data: `Você recebeu um POST com os dados:\n\n${JSON.stringify(parsedBody, null, 2)}`,
+        },
+      },
+    },
   };
+
+  try {
+    await ses.sendEmail(params).promise();
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: "Email enviado com sucesso!",
+        data: parsedBody,
+        timestamp: new Date().toISOString(),
+      }),
+    };
+  } catch (err) {
+    console.error("Erro ao enviar email:", err);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Falha ao enviar email." }),
+    };
+  }
 };

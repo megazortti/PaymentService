@@ -13,7 +13,10 @@ resource "cloudflare_record" "cert_validation" {
   name  = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_name
   type  = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
   value = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value
-
+  lifecycle {
+    prevent_destroy = true   # evita apagar sem querer
+    ignore_changes  = [name, value]  # ignora mudanças nesses campos para não recriar
+  }
   ttl = 300
   proxied = false
 }

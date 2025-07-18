@@ -8,4 +8,8 @@ resource "cloudflare_record" "apigw_alias" {
   type    = "CNAME"
   value   = module.apigw.api_gateway_domain  # Use o nome correto do seu módulo de API Gateway
   proxied = true
+  lifecycle {
+    prevent_destroy = true   # evita apagar sem querer
+    ignore_changes  = [name, value]  # ignora mudanças nesses campos para não recriar
+  }
 }

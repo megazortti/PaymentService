@@ -43,13 +43,13 @@ jobs:
         run: |
           cd lambda/create_payment
           npm install
-          zip function.zip index.js node_modules package.json package-lock.json
+          zip -r function.zip index.js node_modules package.json package-lock.json
 
       - name: Zipar Lambda Webhook
         run: |
           cd lambda/payment_webhook
           npm install
-          zip function.zip index.js node_modules package.json package-lock.json
+          zip -r function.zip index.js node_modules package.json package-lock.json
 
       - name: Terraform Validate
         run: terraform -chdir=infra validate

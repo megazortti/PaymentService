@@ -1,5 +1,5 @@
 resource "aws_ses_email_identity" "sender" {
-  email = "pagamentos@mazzotti.app"
+  email = "pay@mazzotti.app"
 }
 
 resource "aws_iam_policy" "ses_send" {

@@ -23,7 +23,7 @@ exports.handler = async (event) => {
   }
 
   const params = {
-    Source: "pagamentos@mazzotti.app",
+    Source: "pay@mazzotti.app",
     Destination: {
       ToAddresses: ["mazzotti.vlm@gmail.com"],
     },

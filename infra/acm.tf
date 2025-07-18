@@ -22,6 +22,15 @@ resource "cloudflare_record" "cert_validation" {
   allow_overwrite = true
 }
 
+resource "aws_ses_domain_identity" "mazzotti" {
+  domain = "mazzotti.app"
+}
+
+resource "aws_ses_domain_dkim" "mazzotti_dkim" {
+  domain = aws_ses_domain_identity.mazzotti.domain
+}
+
+
 resource "aws_acm_certificate_validation" "cert_validation" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [cloudflare_record.cert_validation.name]

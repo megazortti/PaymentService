@@ -42,11 +42,13 @@ jobs:
       - name: Zipar Lambda Main
         run: |
           cd lambda/create_payment
+          npm install
           zip function.zip index.js
 
       - name: Zipar Lambda Webhook
         run: |
           cd lambda/payment_webhook
+          npm install
           zip function.zip index.js
 
       - name: Terraform Validate

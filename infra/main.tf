@@ -6,14 +6,15 @@ module "simple_lambda" {
   runtime       = "nodejs18.x"
 }
 
-module "simple_api_gateway" {
-  source             = "./modules/api_gateway"
-  name               = "simple_api"
-  lambda_function_arn = module.simple_lambda.lambda_arn
-  route_key          = "GET /"
-  domain_name        = var.domain_name
-  certificate_arn    = aws_acm_certificate.cert.arn
+module "payment_webhook_apigw" {
+  source              = "./modules/api_gateway"
+  name                = "payment_webhook_api"
+  lambda_function_arn = module.payment_webhook_lambda.lambda_arn
+  route_key           = "POST /webhook"
+  domain_name         = var.payment_webhook_domain_name
+  certificate_arn     = module.acm.certificate_arn  # exemplo se você modularizou o ACM
 }
+
 
 
 resource "cloudflare_record" "api_cname" {

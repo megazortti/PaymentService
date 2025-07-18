@@ -3,16 +3,13 @@ data "cloudflare_zone" "main" {
 }
 
 resource "cloudflare_record" "apigw_alias" {
-  zone_id = data.cloudflare_zone.main.id
+  zone_id = var.cloudflare_zone_id
   name    = var.domain_name
   type    = "CNAME"
-  value   = module.payment_webhook_apigw.target_domain_name
+  value   = module.payment_webhook_apigw.target_domain_name   # Certifique que o módulo exporta isso em outputs.tf
   proxied = true
-  depends_on = [
-    aws_apigatewayv2_domain_name.custom_domain,
-    aws_apigatewayv2_api_mapping.mapping
-  ]
 }
+
 
 resource "cloudflare_record" "validation" {
   zone_id = data.cloudflare_zone.main.id

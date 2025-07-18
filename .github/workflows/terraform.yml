@@ -42,10 +42,10 @@ jobs:
       - name: Build all lambdas
         run: |
           for dir in lambda/*; do
-            cd "$dir"
+            pushd "$dir"
             npm install
             zip -r function.zip index.js node_modules package.json package-lock.json
-            cd - > /dev/null
+            popd
           done
 
       - name: Terraform Validate

@@ -15,15 +15,15 @@ resource "cloudflare_record" "apigw_alias" {
   allow_overwrite = true
 }
 
-resource "aws_ses_domain_identity" "mazzotti" {
+resource "aws_ses_domain_identity" "mazzotti_identity" {
   domain = "mazzotti.app"
 }
 
 resource "cloudflare_record" "ses_verification" {
   zone_id = var.cloudflare_zone_id
-  name    = "_amazonses.${aws_ses_domain_identity.mazzotti.domain}"
+  name    = "_amazonses.${aws_ses_domain_identity.mazzotti_identity.domain}"
   type    = "TXT"
-  value   = aws_ses_domain_identity.mazzotti.verification_token
+  value   = aws_ses_domain_identity.mazzotti_identity.verification_token
   ttl     = 3600
   proxied = false
 }

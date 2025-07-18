@@ -1,37 +1,28 @@
-resource "aws_apigatewayv2_api" "this" {
+resource "aws_apigatewayv2_api" "api" {
   name          = var.name
   protocol_type = "HTTP"
 }
 
-resource "aws_lambda_permission" "lambda_permission" {
-  statement_id  = "AllowAPIGatewayInvoke-${var.name}"
-  action        = "lambda:InvokeFunction"
-  function_name = var.lambda_function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.this.execution_arn}/*/*"
-}
-
 resource "aws_apigatewayv2_integration" "lambda_integration" {
-  api_id                 = aws_apigatewayv2_api.this.id
-  integration_type       = "AWS_PROXY"
-  integration_uri        = var.lambda_invoke_arn
+  api_id           = aws_apigatewayv2_api.api.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = var.lambda_function_arn
   payload_format_version = "2.0"
 }
 
 resource "aws_apigatewayv2_route" "route" {
-  api_id    = aws_apigatewayv2_api.this.id
+  api_id    = aws_apigatewayv2_api.api.id
   route_key = var.route_key
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
 resource "aws_apigatewayv2_stage" "stage" {
-  api_id      = aws_apigatewayv2_api.this.id
+  api_id      = aws_apigatewayv2_api.api.id
   name        = "$default"
   auto_deploy = true
 }
 
 resource "aws_apigatewayv2_domain_name" "custom_domain" {
-  count       = var.domain_name != null ? 1 : 0
   domain_name = var.domain_name
 
   domain_name_configuration {
@@ -42,8 +33,7 @@ resource "aws_apigatewayv2_domain_name" "custom_domain" {
 }
 
 resource "aws_apigatewayv2_api_mapping" "mapping" {
-  count       = var.domain_name != null ? 1 : 0
-  api_id      = aws_apigatewayv2_api.this.id
-  domain_name = aws_apigatewayv2_domain_name.custom_domain[0].domain_name
+  api_id      = aws_apigatewayv2_api.api.id
+  domain_name = aws_apigatewayv2_domain_name.custom_domain.id
   stage       = aws_apigatewayv2_stage.stage.name
 }

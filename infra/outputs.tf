@@ -1,12 +1,7 @@
-output "invoke_url" {
-  value = module.payment_webhook_apigw.api_endpoint
+output "api_invoke_url" {
+  value = module.simple_api_gateway.invoke_url
 }
 
-output "custom_domain_name" {
-  value = module.payment_webhook_apigw.custom_domain_name
+output "custom_domain" {
+  value = var.domain_name
 }
-
-output "custom_domain_url" {
-  value = "https://${var.domain_name}/"
-}
-

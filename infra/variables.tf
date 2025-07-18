@@ -1,31 +1,15 @@
-variable "aws_region" {
-  description = "Região AWS"
-  default     = "us-east-1"
-}
-
-variable "cloudflare_api_token" {
-  description = "API Token Cloudflare com permissão DNS"
-  type        = string
-  sensitive   = true
-}
-
 variable "domain_name" {
-  description = "mazzotti.app"
+  description = "O domínio custom para a API"
   type        = string
 }
 
 variable "cloudflare_zone_id" {
-  description = "ID da zona DNS do domínio no Cloudflare"
+  description = "Zone ID do Cloudflare para o domínio"
   type        = string
 }
 
-variable "payment_webhook_domain_name" {
-  description = "Custom domain for MercadoPago payment webhook"
+variable "cloudflare_api_token" {
+  description = "Token API Cloudflare com permissões DNS"
   type        = string
-  default     = "payment.mazzotti.app"
-}
-
-variable "mercadopago_api_key" {
-  description = "API key for MercadoPago integration"
-  type        = string
+  sensitive   = true
 }

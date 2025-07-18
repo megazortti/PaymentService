@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "express": "^5.1.0",
+    "mercadopago": "^2.8.0",
+    "qrcode": "^1.5.4"
+  },
+  "name": "paymentservice",
+  "version": "1.0.0",
+  "description": "System to pay things to Mazzotti",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

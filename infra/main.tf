@@ -18,5 +18,4 @@ module "cloudflare" {
   domain_name   = var.domain_name
   zone_id       = var.cloudflare_zone_id
   target_domain = module.apigw.api_gateway_domain
-  provider      = cloudflare
 }

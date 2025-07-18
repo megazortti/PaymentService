@@ -67,3 +67,10 @@ resource "aws_apigatewayv2_domain_name" "custom" {
     security_policy = "TLS_1_2"
   }
 }
+
+resource "aws_apigatewayv2_api_mapping" "default" {
+  api_id      = aws_apigatewayv2_api.api.id
+  domain_name = aws_apigatewayv2_domain_name.custom_domain.domain_name
+  stage       = aws_apigatewayv2_stage.default.name
+}
+

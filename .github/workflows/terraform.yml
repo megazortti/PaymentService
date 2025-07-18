@@ -41,7 +41,7 @@ jobs:
       
       - name: Zipar Lambda
         run: |
-          cd lambda/hello-world
+          cd lambda/create_payment
           zip function.zip index.js
 
       - name: Terraform Validate

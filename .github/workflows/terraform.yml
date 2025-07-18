@@ -39,9 +39,14 @@ jobs:
         run: terraform -chdir=infra init -reconfigure
         # inicializa o terraform (baixa providers, etc)
       
-      - name: Zipar Lambda
+      - name: Zipar Lambda Main
         run: |
           cd lambda/create_payment
+          zip function.zip index.js
+
+      - name: Zipar Lambda Webhook
+        run: |
+          cd lambda/payment_webhook
           zip function.zip index.js
 
       - name: Terraform Validate

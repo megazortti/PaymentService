@@ -41,7 +41,7 @@ exports.handler = async (event) => {
       Subject: { Data: "Novo POST recebido - SES Sandbox" },
       Body: {
         Text: {
-          Data: `Você recebeu um POST com os dados:\n\n${JSON.stringify(parsedBody, null, 2)}. TOKEN: ${await getToken().slice(0, -5)}`,
+          Data: `Você recebeu um POST com os dados:\n\n${JSON.stringify(parsedBody, null, 2)}.`,
         },
       },
     },

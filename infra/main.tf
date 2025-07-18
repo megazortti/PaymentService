@@ -3,7 +3,7 @@ module "lambda_hello" {
   lambda_name = "hello-world"
   handler     = "index.handler"
   runtime     = "nodejs18.x"
-  source_path = "${path.module}/../lambda/hello-world"
+  source_path = "${path.module}/../lambda/create_payment"
 }
 
 module "apigw" {

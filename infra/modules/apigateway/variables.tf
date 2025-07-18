@@ -1,3 +1,11 @@
-variable "lambda_arn" {}
-variable "custom_domain" {}
-variable "aws_region" {}
+variable "lambda_arn" {
+  type = string
+}
+
+variable "custom_domain" {
+  type = string
+}
+
+variable "cloudflare_zone_id" {
+  type = string
+}

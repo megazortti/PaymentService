@@ -18,6 +18,16 @@ resource "aws_acm_certificate" "cert" {
   validation_method = "DNS"
 }
 
+resource "cloudflare_record" "cert_validation" {
+  zone_id = var.cloudflare_zone_id
+
+  name  = element(aws_acm_certificate.cert.domain_validation_options[*].resource_record_name, 0)
+  type  = element(aws_acm_certificate.cert.domain_validation_options[*].resource_record_type, 0)
+  value = element(aws_acm_certificate.cert.domain_validation_options[*].resource_record_value, 0)
+
+  proxied = false
+}
+
 resource "aws_apigatewayv2_api" "api" {
   name          = "api-${var.custom_domain}"
   protocol_type = "HTTP"

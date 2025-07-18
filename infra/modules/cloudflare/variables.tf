@@ -1,3 +1,11 @@
-variable "domain_name" {}
-variable "zone_id" {}
-variable "target_domain" {}
+variable "domain_name" {
+  type = string
+}
+
+variable "zone_id" {
+  type = string
+}
+
+variable "target_domain" {
+  type = string
+}

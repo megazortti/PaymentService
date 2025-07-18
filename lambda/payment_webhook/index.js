@@ -1,16 +1,18 @@
 exports.handler = async (event) => {
-  const method = event.httpMethod;
+  const method =
+    event.httpMethod || (event.requestContext && event.requestContext.http && event.requestContext.http.method);
   const body = event.body;
   console.log(body, "body");
-  console.log(JSON.parse(body), "body parsed");
-  if (method === "POST") {
-    let parsedBody;
-    try {
-      parsedBody = JSON.parse(body); 
-    } catch {
-      parsedBody = body;
-    }
 
+  let parsedBody;
+  try {
+    parsedBody = JSON.parse(body);
+    console.log(parsedBody, "body parsed");
+  } catch {
+    parsedBody = body;
+  }
+
+  if (method === "POST") {
     return {
       statusCode: 200,
       body: JSON.stringify({

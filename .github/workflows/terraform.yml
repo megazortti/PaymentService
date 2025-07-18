@@ -40,16 +40,16 @@ jobs:
         # inicializa o terraform (baixa providers, etc)
       
       - name: Zipar Lambda Main
+        working-directory: lambda/create_payment
         run: |
-          cd lambda/create_payment
           npm install
-          zip -r function.zip .
+          zip -r function.zip index.js node_modules package.json package-lock.json
 
       - name: Zipar Lambda Webhook
+        working-directory: lambda/payment_webhook
         run: |
-          cd lambda/payment_webhook
           npm install
-          zip -r function.zip .
+          zip -r function.zip index.js node_modules package.json package-lock.json
 
       - name: Terraform Validate
         run: terraform -chdir=infra validate

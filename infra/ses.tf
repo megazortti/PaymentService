@@ -22,6 +22,6 @@ resource "aws_ses_email_identity" "victor_email" {
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_ses" {
-  role       = aws_iam_role.lambda_exec.name
+  role       = module.payment_webhook.lambda_exec_role_name
   policy_arn = aws_iam_policy.ses_send.arn
 }

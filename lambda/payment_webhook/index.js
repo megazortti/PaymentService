@@ -2,7 +2,6 @@ const AWS = require("aws-sdk");
 const ses = new AWS.SES();
 
 exports.handler = async (event) => {
-  // Pega o método HTTP (compatível REST API e HTTP API)
   const method =
     event.httpMethod || (event.requestContext && event.requestContext.http && event.requestContext.http.method);
 
@@ -16,7 +15,6 @@ exports.handler = async (event) => {
     };
   }
 
-  // Pega o corpo da requisição
   let parsedBody;
   try {
     parsedBody = JSON.parse(event.body);
@@ -24,7 +22,6 @@ exports.handler = async (event) => {
     parsedBody = {};
   }
 
-  // Parâmetros do SES, com e-mails do sandbox (verificados)
   const params = {
     Source: "pagamentos@mazzotti.app",
     Destination: {

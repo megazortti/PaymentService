@@ -48,7 +48,7 @@ resource "aws_apigatewayv2_integration" "lambda_integration" {
 
 resource "aws_apigatewayv2_route" "default" {
   api_id    = aws_apigatewayv2_api.api.id
-  route_key = "GET /"
+  route_key = "ANY /"
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 

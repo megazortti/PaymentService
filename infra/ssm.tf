@@ -3,6 +3,9 @@ resource "aws_ssm_parameter" "mercadopago_access_token" {
   type        = "SecureString"
   value       = "CHANGE_HERE"
   description = "Token de acesso do MercadoPago para pagamentos"
+  lifecycle {
+    ignore_changes = [value]
+  }
 }
 
 resource "aws_ssm_parameter" "mercadopago_client_secret_token" {
@@ -10,6 +13,9 @@ resource "aws_ssm_parameter" "mercadopago_client_secret_token" {
   type        = "SecureString"
   value       = "CHANGE_HERE"
   description = "Token de acesso do MercadoPago secret"
+  lifecycle {
+    ignore_changes = [value]
+  }
 }
 
 resource "aws_ssm_parameter" "mercadopago_notification_token" {
@@ -17,4 +23,7 @@ resource "aws_ssm_parameter" "mercadopago_notification_token" {
   type        = "SecureString"
   value       = "CHANGE_HERE"
   description = "Token de acesso do MercadoPago para notificações"
+  lifecycle {
+    ignore_changes = [value]
+  }
 }

@@ -4,7 +4,7 @@ const ssm = new AWS.SSM();
 
 const getToken = async () => {
   const param = await ssm.getParameter({
-    Name: "/secrets/mercadopago/pix_token",
+    Name: "/secrets/mercadopago/notification_token",
     WithDecryption: true
   }).promise();
 

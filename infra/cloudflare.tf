@@ -6,7 +6,7 @@ resource "cloudflare_record" "apigw_alias" {
   zone_id = data.cloudflare_zone.main.id
   name    = var.domain_name
   type    = "CNAME"
-  value   = aws_apigatewayv2_domain_name.custom_domain.domain_name_configuration[0].target_domain_name
+  value   = module.payment_webhook_apigw.target_domain_name
   proxied = true
   depends_on = [
     aws_apigatewayv2_domain_name.custom_domain,

@@ -28,3 +28,4 @@ resource "aws_lambda_permission" "allow_apigw" {
   function_name = aws_lambda_function.lambda.function_name
   principal     = "apigateway.amazonaws.com"
 }
+

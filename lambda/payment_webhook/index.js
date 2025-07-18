@@ -1,13 +1,14 @@
 exports.handler = async (event) => {
-  const method = event.httpMethod; // GET, POST, etc.
-  const body = event.body;         // corpo da requisição (em string)
-
+  const method = event.httpMethod;
+  const body = event.body;
+  console.log(body, "body");
+  console.log(JSON.parse(body), "body parsed");
   if (method === "POST") {
     let parsedBody;
     try {
-      parsedBody = JSON.parse(body); // tenta parsear o body como JSON
+      parsedBody = JSON.parse(body); 
     } catch {
-      parsedBody = body; // se não for JSON, retorna como está
+      parsedBody = body;
     }
 
     return {

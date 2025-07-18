@@ -18,3 +18,9 @@ variable "domain_name" {
   type        = string
   description = "Custom domain name"
 }
+
+variable "mercadopago_token" {
+  description = "Token de acesso do MercadoPago (Pix)"
+  type        = string
+  sensitive   = true
+}

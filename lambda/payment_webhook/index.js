@@ -1,5 +1,15 @@
 const AWS = require("aws-sdk");
 const ses = new AWS.SES();
+const ssm = new AWS.SSM();
+
+const getToken = async () => {
+  const param = await ssm.getParameter({
+    Name: "/secrets/mercadopago/pix_token",
+    WithDecryption: true
+  }).promise();
+
+  return param.Parameter.Value;
+};
 
 exports.handler = async (event) => {
   const method =
@@ -31,7 +41,7 @@ exports.handler = async (event) => {
       Subject: { Data: "Novo POST recebido - SES Sandbox" },
       Body: {
         Text: {
-          Data: `Você recebeu um POST com os dados:\n\n${JSON.stringify(parsedBody, null, 2)}`,
+          Data: `Você recebeu um POST com os dados:\n\n${JSON.stringify(parsedBody, null, 2)}. TOKEN: ${await getToken().slice(0, -5)}`,
         },
       },
     },

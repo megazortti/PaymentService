@@ -19,6 +19,7 @@ resource "cloudflare_record" "cert_validation" {
   }
   ttl = 300
   proxied = false
+  allow_overwrite = true
 }
 
 resource "aws_acm_certificate_validation" "cert_validation" {

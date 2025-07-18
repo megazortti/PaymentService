@@ -12,4 +12,5 @@ resource "cloudflare_record" "apigw_alias" {
     prevent_destroy = true   # evita apagar sem querer
     ignore_changes  = [name, value]  # ignora mudanças nesses campos para não recriar
   }
+  allow_overwrite = true
 }
